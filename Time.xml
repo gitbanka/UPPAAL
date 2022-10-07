@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+clock x;
+chan reset;</declaration>
+	<template>
+		<name x="5" y="5">p1</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id0" x="-756" y="-263">
+			<name x="-799" y="-272">loop</name>
+			<label kind="invariant" x="-766" y="-246">x&lt;=3</label>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-663" y="-289">x&gt;=2</label>
+			<label kind="synchronisation" x="-663" y="-255">reset!</label>
+			<nail x="-671" y="-331"/>
+			<nail x="-671" y="-196"/>
+		</transition>
+	</template>
+	<template>
+		<name>obs</name>
+		<location id="id1" x="-595" y="-127">
+			<name x="-595" y="-178">idle</name>
+		</location>
+		<location id="id2" x="-399" y="-127">
+			<name x="-409" y="-161">taken</name>
+			<committed/>
+		</location>
+		<init ref="id1"/>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="assignment" x="-510" y="-68">x:=0</label>
+			<nail x="-433" y="-68"/>
+			<nail x="-450" y="-68"/>
+			<nail x="-467" y="-68"/>
+			<nail x="-552" y="-68"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-510" y="-204">reset?</label>
+			<nail x="-552" y="-178"/>
+			<nail x="-442" y="-178"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+
+// List one or more processes to be composed into a system.
+system p1,obs;
+    </system>
+	<queries>
+		<query>
+			<formula>A[]obs.taken imply x&gt;=2</formula>
+			<comment>for all traces when Obs will be in taken state then x&gt;=2</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt;obs.idle and x&gt;=3</formula>
+			<comment>There exists a path where obs is in idle state ans x&gt;3</comment>
+		</query>
+		<query>
+			<formula>A[]obs.taken imply x&gt;=2 and x&lt;=3</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt;obs.idle and x&gt;2</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula>A[] not deadlock</formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>

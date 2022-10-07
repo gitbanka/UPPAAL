@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+chan press;
+</declaration>
+	<template>
+		<name x="5" y="5">Lamp</name>
+		<declaration>// Place local declarations here.
+clock y;</declaration>
+		<location id="id0" x="-238" y="-93">
+			<name x="-272" y="-102">off</name>
+			<label kind="invariant" x="-289" y="-119">y&lt;=3</label>
+		</location>
+		<location id="id1" x="-93" y="-93">
+			<name x="-102" y="-85">low</name>
+		</location>
+		<location id="id2" x="85" y="-93">
+			<name x="75" y="-127">bright</name>
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-161" y="-170">y&gt;=5</label>
+			<label kind="synchronisation" x="-161" y="-195">press?</label>
+			<label kind="assignment" x="-221" y="-187">y:=0</label>
+			<nail x="-68" y="-170"/>
+			<nail x="-212" y="-170"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-128" y="-8">press?</label>
+			<label kind="assignment" x="-212" y="-8">y:=0</label>
+			<nail x="59" y="-8"/>
+			<nail x="-272" y="-8"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-25" y="-93">y&lt;5</label>
+			<label kind="synchronisation" x="-34" y="-119">press?</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-212" y="-93">y&gt;=2</label>
+			<label kind="synchronisation" x="-195" y="-119">press?</label>
+			<label kind="assignment" x="-153" y="-93">y:=0</label>
+		</transition>
+	</template>
+	<template>
+		<name>Controler</name>
+		<declaration>clock y;</declaration>
+		<location id="id3" x="9" y="0">
+			<name x="0" y="8">initial</name>
+		</location>
+		<init ref="id3"/>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="85" y="-34">press!</label>
+			<nail x="76" y="-51"/>
+			<nail x="76" y="0"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id3"/>
+			<label kind="guard" x="8" y="-110">y&gt;=5</label>
+			<label kind="synchronisation" x="8" y="-93">press!</label>
+			<nail x="-17" y="-76"/>
+			<nail x="59" y="-68"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-127" y="-42">y&lt;5</label>
+			<label kind="synchronisation" x="-110" y="-68">press!</label>
+			<nail x="-93" y="-25"/>
+			<nail x="-42" y="-68"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+
+// List one or more processes to be composed into a system.
+system Lamp;
+    </system>
+	<queries>
+		<query>
+			<formula></formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>
